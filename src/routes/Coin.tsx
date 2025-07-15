@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { use, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -29,13 +29,19 @@ interface RouteParams {
   coinId: string;
 }
 
+interface RouteState {
+  name: string;
+}
+
 function Coin() {
   const { coinId } = useParams<RouteParams>();
   const [loading, setLoading] = useState(true);
+  const { state } = useLocation<RouteState>();
+  console.log();
   return (
     <Container>
       <Header>
-        <Title>코인</Title>
+        <Title>{state?.name || "Loading"}</Title>
       </Header>
       {loading ? <Loader>Loading...</Loader> : null}
     </Container>
