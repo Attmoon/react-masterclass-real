@@ -3,8 +3,8 @@ import { fetchCoinHistory } from "./api";
 import ApexChart from "react-apexcharts";
 
 interface IHistorical {
-  time_open: string;
-  time_close: string;
+  time_open: number;
+  time_close: number;
   open: number;
   high: number;
   low: number;
@@ -33,34 +33,49 @@ function Chart({ coinId }: ChartProps) {
           series={[
             {
               name: "Price",
-              data: data?.map((price) => Number(price.close)) as number[]
+              data: data?.map((price) => price.close) as number[],
             },
           ]}
           options={{
             theme: {
-              mode: "dark"
+              mode: "dark",
             },
             chart: {
               height: 300,
               width: 500,
-              toolbar: { show: false},
+              toolbar: { show: false },
               background: "transparent",
             },
-            grid: {show: false},
+            grid: { show: false },
             stroke: {
               curve: "smooth",
               width: 3,
             },
             yaxis: {
-              show: false
+              show: false,
             },
             xaxis: {
-              axisBorder: {show: false},
-              axisTicks: {show: false},
+              axisBorder: { show: false },
+              axisTicks: { show: false },
               labels: {
-                show: false
-              }
-            }
+                show: false,
+              },
+              type: "datetime",
+              categories: data?.map(price =>  new Date(price.time_close * 1000).toUTCString())
+            },
+            fill: {
+              type: "gradient",
+              gradient: {
+                gradientToColors: ["#0be881"],
+                stops: [0, 100],
+              },
+            },
+            colors: ["#0fbcf9"],
+            tooltip: {
+              y: {
+                formatter: (value) => `$${value.toFixed(2)}`,
+              },
+            },
           }}
         />
       )}
