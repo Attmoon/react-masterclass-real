@@ -32,6 +32,10 @@ const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
 `;
 
+const BackButton = styled.button`
+
+`;
+
 const Loader = styled.span`
   text-align: center;
   display: block;
@@ -187,6 +191,9 @@ function Coin() {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
+        <BackButton>
+          <Link to="/">← Back</Link>
+        </BackButton>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
